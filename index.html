@@ -192,32 +192,35 @@
     var images = document.getElementsByClassName("gallery-item");
     var currentIndex = 0;
 
-    // 모달 열기
     function openModal(index) {
         modal.style.display = "flex";
         modalImg.src = images[index].src;
         currentIndex = index;
     }
 
-    // 모달 닫기
     function closeModal() {
         modal.style.display = "none";
     }
 
-    // 슬라이드 이동 (이전/다음)
     function changeSlide(n) {
         currentIndex += n;
-        if (currentIndex >= images.length) currentIndex = 0; // 마지막에서 처음으로
-        if (currentIndex < 0) currentIndex = images.length - 1; // 처음에서 마지막으로
+        if (currentIndex >= images.length) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = images.length - 1;
         modalImg.src = images[currentIndex].src;
     }
 
-    // 배경 클릭 시 닫기
     window.onclick = function(event) {
-        if (event.target == modal) {
-            closeModal();
-        }
+        if (event.target == modal) closeModal();
     }
+
+    // --- 여기에서 방금 드린 키보드 코드가 추가됩니다 ---
+    document.addEventListener('keydown', function(event) {
+        if (modal.style.display === "flex") {
+            if (event.key === "ArrowLeft") changeSlide(-1);
+            else if (event.key === "ArrowRight") changeSlide(1);
+            else if (event.key === "Escape") closeModal();
+        }
+    });
 </script>
 </body>
 
